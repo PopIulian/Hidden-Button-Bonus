@@ -4,7 +4,7 @@ function generateButtons() {
     let buttonCount = parseInt(document.getElementById("button-count").value);
     let buttonsContainer = document.getElementById("buttons-container");
     buttonsContainer.innerHTML = "";
-    document.getElementById("message2").textContent = "";
+    document.getElementById("message").textContent = "";
     if (isNaN(buttonCount) || buttonCount <= 0) {
         alert("Please enter a valid number of buttons.");
         return;
@@ -14,23 +14,22 @@ function generateButtons() {
         button.className = "btn btn-primary m-1";
         button.textContent = "Button " + i;
         button.onclick = function() {
-            checkWinner(parseInt(this.textContent.split(" ")[1]));
-        }
+            checkWinner(this, i);
+        };
         buttonsContainer.appendChild(button);
     }
     winnerButton = Math.floor(Math.random() * buttonCount) + 1;
 }
 
-function checkWinner(buttonNumber2) {
-    let messageElement = document.getElementById("message2");
-    let buttons = document.querySelectorAll('#buttons-container button');
-    if (buttonNumber2 === winnerButton) {
+function checkWinner(button, buttonNumber) {
+    let messageElement = document.getElementById("message");
+    if (buttonNumber === winnerButton) {
         messageElement.textContent = "Congratulations! You found the winning button!";
-        buttons[buttonNumber2 - 1].classList.remove('btn-danger');
-        buttons[buttonNumber2 - 1].classList.add('btn-success');
+        button.classList.remove('btn-primary', 'btn-danger');
+        button.classList.add('btn-success');
     } else {
         messageElement.textContent = "Sorry, this button is not a winner. Please try again.";
-        buttons[buttonNumber2 - 1].classList.remove('btn-primary');
-        buttons[buttonNumber2 - 1].classList.add('btn-danger');
+        button.classList.remove('btn-primary');
+        button.classList.add('btn-danger');
     }
 }
